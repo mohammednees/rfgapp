@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:rfgapp/model/item.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:rfgapp/model/pdf_screen.dart';
+
 
 class DepartmentItems extends StatefulWidget {
   final Map<dynamic, dynamic> map;
@@ -219,12 +219,7 @@ class _DepartmentItemsState extends State<DepartmentItems> {
 
               String fullPath = "$documentPath/example.pdf";
 
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PdfPreviewScreen(
-                            path: fullPath,
-                          )));
+           
             },
           )
         ],

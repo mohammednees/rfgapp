@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rfgapp/screens/manager/balancescreens/balance_report_screen.dart';
+
 import 'package:rfgapp/widgets/departments_profile.dart';
 
 class Balance extends StatefulWidget {

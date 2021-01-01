@@ -32,10 +32,13 @@ dependencies:
   provider: ^4.2.0
   clippy_flutter: ^1.1.1
   intl: ^0.16.1
-  pdf: 
-  path_provider: ^1.6.5
-  flutter_full_pdf_viewer: ^1.0.6
-  printing: ^3.5.0
+  pdf:
+  printing:
+  path_provider:
+  open_file:
+
+
+
  
  
 
@@ -67,6 +70,7 @@ flutter:
   assets:
     - assets/image/app-icon.gif
     - assets/image/app-icon2.jpg
+    - assets/image/ic_launcher.png
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -79,12 +83,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: Bang
+      fonts:
+        - asset: assets/fonts/Bangers-Regular.ttf
+    - family: arabic
+      fonts:
+        - asset: assets/fonts/arabic.ttf
+
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
