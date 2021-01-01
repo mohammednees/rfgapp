@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "206724972",
+    "firebase_url": "https://rfgapp.firebaseio.com",
+    "project_id": "rfgapp",
+    "storage_bucket": "rfgapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206724972:android:38b119aba99b4cde62dd49",
+        "android_client_info": {
+          "package_name": "com.example.rfgapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206724972-m4kj160mqd1d9d1ergac3h7tk58k8jr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc0nzO7ivTtzdH-Qq76lrvUeXaWeMAZdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206724972-m4kj160mqd1d9d1ergac3h7tk58k8jr0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
