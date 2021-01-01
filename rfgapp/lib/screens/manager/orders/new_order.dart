@@ -225,7 +225,7 @@ class _AddNewOrderState extends State<AddNewOrder> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Container(
-                      width: 100,
+                      width: 110,
                       child: DropdownButton<String>(
                           value: selectedItemcustomer,
                           items: _customerList
@@ -263,14 +263,17 @@ class _AddNewOrderState extends State<AddNewOrder> {
                   ],
                 ),
               ),
-              Container(
-                width: 400,
-                child: TextField(
-                  controller: _infoCont,
-                  decoration: InputDecoration(labelText: 'Information'),
-                  onChanged: (value) {
-                    _txtInfo = value;
-                  },
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 400,
+                  child: TextField(
+                    controller: _infoCont,
+                    decoration: InputDecoration(labelText: 'Information'),
+                    onChanged: (value) {
+                      _txtInfo = value;
+                    },
+                  ),
                 ),
               ),
               Container(
