@@ -19,9 +19,9 @@ class _PurchaseState extends State<Purchase> {
     Timestamp timestam =
         Timestamp.fromDate(DateTime.now().add(Duration(days: 1)));
     return Scaffold(
-      appBar: AppBar(title:Text('Purchase List')),
+      appBar: AppBar(title: Text('Purchase List')),
       body: StreamBuilder(
-        stream: Firestore.instance
+        stream: FirebaseFirestore.instance
             .collection('purchase')
             .where('createAt', isLessThan: timestam)
             .snapshots(),
@@ -43,7 +43,18 @@ class _PurchaseState extends State<Purchase> {
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        leading: Text((index + 1).toString()),
+                        leading: Container(
+                          margin: EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: Colors.blue)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              (index + 1).toString(),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
                         title: Text(customerdata[index]['sellerName']),
                         subtitle: Text(DateFormat.yMMMd().format(date) +
                             '  |  ' +
@@ -51,13 +62,15 @@ class _PurchaseState extends State<Purchase> {
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (ctx) {
-                            return PurchaseItems(customerdata[index]['items']);
+                            return PurchaseItems(customerdata[index]['items'],
+                                customerdata[index]['sellerName'], 'edit',customerdata[index].documentID);
                           }));
                         },
                       ),
                       Divider(
                         color: Colors.blue,
                         thickness: 1,
+                        height: 1,
                       )
                     ],
                   ),
@@ -112,9 +125,7 @@ class _PurchaseState extends State<Purchase> {
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (ctx) {
-              return PurchaseItems(
-                {},
-              );
+              return PurchaseItems({}, '', 'new','');
             }));
           }),
     );

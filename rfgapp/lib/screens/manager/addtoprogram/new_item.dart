@@ -19,7 +19,7 @@ class _AddNewItemState extends State<AddNewItem> {
   int _price = 0;
   String _imageUrl;
   int _itemQty = 0;
-  String selectedMenu = '';
+  String selectedMenu = 'Price/piece';
   int _installPrice;
   int _manufacPrice;
   void _trySubmitItem(BuildContext ctx) async {
@@ -29,7 +29,7 @@ class _AddNewItemState extends State<AddNewItem> {
     if (isValid) {
       _formKey.currentState.save();
       try {
-        await Firestore.instance.collection('items').document().setData({
+        await FirebaseFirestore.instance.collection('items').doc().set({
           'itemName': _customerName,
           'ItemPrice': _price,
           'itemImageUrl': _imageUrl,
@@ -119,9 +119,9 @@ class _AddNewItemState extends State<AddNewItem> {
                     child: DropdownButton<String>(
                       value: selectedMenu,
                       items: <String>[
-                        '',
-                        'Price/m2',
-                        'Price/M.L',
+                        'NIS/piece',
+                        'NIS/m2',
+                        'NIS/M.L',
                       ].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,

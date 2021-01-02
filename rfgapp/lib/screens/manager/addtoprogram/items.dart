@@ -21,7 +21,7 @@ class _AddItemState extends State<AddItem> {
         Timestamp.fromDate(DateTime.now().add(Duration(days: 1)));
     return Scaffold(
       body: StreamBuilder(
-        stream: Firestore.instance
+        stream: FirebaseFirestore.instance
             .collection('items')
             .where('createAt', isLessThan: timestam)
             .snapshots(),
@@ -46,6 +46,7 @@ class _AddItemState extends State<AddItem> {
                       Divider(
                         color: Colors.blue,
                         thickness: 1,
+                        height: 1,
                       )
                     ],
                   ),
@@ -82,10 +83,9 @@ class _AddItemState extends State<AddItem> {
                                     child: Text('Yes'),
                                     onPressed: () {
                                       Navigator.of(ctx).pop(true);
-                                      Firestore.instance
+                                      FirebaseFirestore.instance
                                           .collection('items')
-                                          .document(
-                                              customerdata[index].documentID)
+                                          .doc(customerdata[index].documentID)
                                           .delete();
                                     },
                                   )
@@ -140,12 +140,11 @@ class _AddItemState extends State<AddItem> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
-                    margin: EdgeInsets.all(4),
-                    width: screenWidth / 10,
+                    margin: EdgeInsets.all(2),
                     height: 30,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blueGrey, width: 1),
-                        borderRadius: BorderRadius.circular(3)),
+                        border: Border.all(color: Colors.blue, width: 1),
+                        borderRadius: BorderRadius.circular(5)),
                     child: Center(
                         child: Padding(
                       padding: const EdgeInsets.all(2.0),
@@ -171,9 +170,12 @@ class _AddItemState extends State<AddItem> {
                 ),
                 Container(
                   width: screenWidth / 5.5,
-                  child: Text(snapshot[index]['itemName'],
-                      style: textStyle(), overflow: TextOverflow.ellipsis , maxLines: 3,),
-
+                  child: Text(
+                    snapshot[index]['itemName'],
+                    style: textStyle(),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                  ),
                 ),
                 VerticalDivider(
                   indent: 2,
@@ -184,22 +186,21 @@ class _AddItemState extends State<AddItem> {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: Container(
-                    width: screenWidth / 3.5,
+                    width: screenWidth / 3,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                            'P:' +
-                                snapshot[index]['ItemPrice'].toString() +
-                                ' NIS' +
-                                snapshot[index]['priceMethod'].toString().substring(5,8),
+                            'P : ' +
+                                snapshot[index]['ItemPrice'].toString() + " " +
+                                snapshot[index]['priceMethod'].toString(),
                             style: textStyle(),
                             overflow: TextOverflow.ellipsis),
-                        Text('I:' + snapshot[index]['installPrice'].toString(),
+                        Text('I : ' + snapshot[index]['installPrice'].toString(),
                             style: textStyle(),
                             overflow: TextOverflow.ellipsis),
                         Text(
-                            'M:' +
+                            'M : ' +
                                 snapshot[index]['manufacturePrice'].toString(),
                             style: textStyle(),
                             overflow: TextOverflow.ellipsis),
@@ -215,7 +216,7 @@ class _AddItemState extends State<AddItem> {
 
   TextStyle textStyle() {
     return TextStyle(
-      fontSize: 14,
+      fontSize: 12,
       color: Colors.blue,
     );
   }

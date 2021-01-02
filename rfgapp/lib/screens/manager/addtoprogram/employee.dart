@@ -1,6 +1,3 @@
-
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -24,7 +21,7 @@ class _AddEmployeeState extends State<AddEmployee> {
         Timestamp.fromDate(DateTime.now().add(Duration(days: 1)));
     return Scaffold(
       body: StreamBuilder(
-        stream: Firestore.instance
+        stream: FirebaseFirestore.instance
             .collection('employees')
             .where('createAt', isLessThan: timestam)
             .snapshots(),
@@ -46,17 +43,31 @@ class _AddEmployeeState extends State<AddEmployee> {
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        leading: Text((index + 1).toString()),
+                        leading: Container(
+                          margin: EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: Colors.blue)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              (index + 1).toString(),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
                         title: Text(employeedata[index]['EmployeeName'] +
                             '  |  ' +
                             DateFormat.yMMMd().format(date)),
-                        subtitle: Text('Month : ' +
-                            employeedata[index]['EmployeeSalary'].toString() +
-                            '  |  ' +
-                            'Hour : ' +
-                            employeedata[index]['EmployeeHour'].toString() +
-                            ' | ' +
-                            employeedata[index]['phoneNumber'].toString()),
+                        subtitle: Text(
+                          'Month : ' +
+                              employeedata[index]['EmployeeSalary'].toString() +
+                              '  |  ' +
+                              'Hour : ' +
+                              employeedata[index]['EmployeeHour'].toString() +
+                              ' | ' +
+                              employeedata[index]['phoneNumber'].toString(),
+                          style: TextStyle(color: Colors.blue),
+                        ),
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
@@ -77,6 +88,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                       Divider(
                         color: Colors.blue,
                         thickness: 1,
+                        height: 1,
                       )
                     ],
                   ),

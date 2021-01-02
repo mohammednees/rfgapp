@@ -78,10 +78,10 @@ class _EditCustomerState extends State<EditItem> {
                   FocusScope.of(context).unfocus();
                   if (isValid) {
                     _formKey.currentState.save();
-                    await Firestore.instance
+                    await FirebaseFirestore.instance
                         .collection('items')
-                        .document(widget.ind)
-                        .updateData({
+                        .doc(widget.ind)
+                        .update({
                       'itemName': _customerName,
                       'ItemPrice': _customerNum,
                       'priceMethod': priceper,
@@ -182,8 +182,9 @@ class _EditCustomerState extends State<EditItem> {
                 DropdownButton<String>(
                   value: priceper,
                   items: <String>[
-                    'Price/m2',
-                    'Price/M.L',
+                        'NIS/piece',
+                        'NIS/m2',
+                        'NIS/M.L',
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
