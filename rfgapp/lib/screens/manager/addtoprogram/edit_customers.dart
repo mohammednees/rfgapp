@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +5,8 @@ class EditCustomer extends StatefulWidget {
   final String name;
   final String phoneNumber;
   final String ind;
-  EditCustomer(this.name, this.phoneNumber, this.ind);
+  final String grade;
+  EditCustomer(this.name, this.phoneNumber, this.ind, this.grade);
   @override
   _EditCustomerState createState() => _EditCustomerState();
 }
@@ -17,11 +17,16 @@ class _EditCustomerState extends State<EditCustomer> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  String selectedValue = 'C';
+  List<String> _customerList = ['A', 'B', 'C'];
+
   @override
   void initState() {
     _nameController.text = widget.name;
     _phoneController.text = widget.phoneNumber;
     super.initState();
+    selectedValue = widget.grade;
   }
 
   @override
@@ -37,12 +42,13 @@ class _EditCustomerState extends State<EditCustomer> {
                 FocusScope.of(context).unfocus();
                 if (isValid) {
                   _formKey.currentState.save();
-                  await Firestore.instance
+                  await FirebaseFirestore.instance
                       .collection('customers')
-                      .document(widget.ind)
-                      .updateData({
+                      .doc(widget.ind)
+                      .update({
                     'customerName': _customerName,
                     'phoneNumber': _customerNum,
+                    "classify": selectedValue
                   }).then((value) {
                     Navigator.pop(context);
                   });
@@ -82,6 +88,29 @@ class _EditCustomerState extends State<EditCustomer> {
                   }
                   return null;
                 },
+              ),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Grade :   '),
+                    DropdownButton<String>(
+                      value: selectedValue,
+                      items: _customerList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String value) {
+                        setState(() {
+                          selectedValue = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

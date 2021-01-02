@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _AddCustomerState extends State<AddCustomer> {
         Timestamp.fromDate(DateTime.now().add(Duration(days: 1)));
     return Scaffold(
       body: StreamBuilder(
-        stream: Firestore.instance
+        stream: FirebaseFirestore.instance
             .collection('customers')
             .where('createAt', isLessThan: timestam)
             .snapshots(),
@@ -60,7 +61,12 @@ class _AddCustomerState extends State<AddCustomer> {
                             ),
                           ),
                         ),
-                        title: Text(customerdata[index]['customerName']),
+                        title: Text(
+                          customerdata[index]['customerName'] +
+                              "    |   Grade :  " +
+                              customerdata[index]['classify'],
+                          style: TextStyle(color: Colors.blue),
+                        ),
                         subtitle: Text('Create At : ' +
                             DateFormat.yMMMd().format(date) +
                             '  | Phone No. : ' +
@@ -71,7 +77,8 @@ class _AddCustomerState extends State<AddCustomer> {
                               return EditCustomer(
                                   customerdata[index]['customerName'],
                                   customerdata[index]['phoneNumber'].toString(),
-                                  customerdata[index].documentID);
+                                  customerdata[index].documentID,
+                                  customerdata[index]['classify']);
                             },
                           )).then((value) {
                             setState(() {});
@@ -81,6 +88,7 @@ class _AddCustomerState extends State<AddCustomer> {
                       Divider(
                         color: Colors.blue,
                         thickness: 1,
+                        height: 1,
                       )
                     ],
                   ),
@@ -117,10 +125,9 @@ class _AddCustomerState extends State<AddCustomer> {
                                     child: Text('Yes'),
                                     onPressed: () {
                                       Navigator.of(ctx).pop(true);
-                                      Firestore.instance
+                                      FirebaseFirestore.instance
                                           .collection('customers')
-                                          .document(
-                                              customerdata[index].documentID)
+                                          .doc(customerdata[index].documentID)
                                           .delete();
                                     },
                                   )

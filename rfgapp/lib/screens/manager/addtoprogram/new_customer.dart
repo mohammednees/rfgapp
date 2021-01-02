@@ -1,11 +1,8 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AddNewCustomer extends StatefulWidget {
-
-
   @override
   _AddNewCustomerState createState() => _AddNewCustomerState();
 }
@@ -15,24 +12,24 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
 
   String _customerName = '';
   int _phoneNumber = 0;
-
-
+  String selectedValue = 'C';
+  List<String> _customerList = ['A', 'B', 'C'];
 
   void _trySubmit(BuildContext ctx) async {
-   
     final isValid = _formKey.currentState.validate();
     FocusScope.of(ctx).unfocus();
 
     if (isValid) {
       _formKey.currentState.save();
       try {
-        await Firestore.instance.collection('customers').document().setData({
+        await FirebaseFirestore.instance.collection('customers').doc().set({
           'customerName': _customerName,
           'phoneNumber': _phoneNumber,
           'createAt': DateTime.now(),
+          'classify': selectedValue,
         });
 
-         Navigator.pop(context);
+        Navigator.pop(context);
       } on PlatformException catch (err) {
         var message = 'An error occurred, pelase check your credentials!';
 
@@ -99,6 +96,29 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                   _phoneNumber = int.parse(value);
                 },
               ),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Grade :   '),
+                    DropdownButton<String>(
+                      value: selectedValue,
+                      items: _customerList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String value) {
+                        setState(() {
+                          selectedValue = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
               IconButton(
                   icon: Icon(
                     Icons.save,
@@ -107,10 +127,6 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                   ),
                   onPressed: () {
                     _trySubmit(context);
-                  
-                   
-
-                   
                   })
             ],
           ),
