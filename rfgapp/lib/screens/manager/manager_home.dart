@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rfgapp/screens/manager/formScreens/main_page.dart';
 
 class ManagerHome extends StatefulWidget {
   @override
@@ -18,7 +19,15 @@ class _ManagerHomeState extends State<ManagerHome> {
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
           onPressed: () {
-            Navigator.pushNamed(context, '/$name');
+            if (name == 'Purchase') {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainPage(name),
+                  ));
+            } else {
+              Navigator.pushNamed(context, '/$name');
+            }
           }),
     );
   }
